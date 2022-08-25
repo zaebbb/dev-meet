@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Создание или подключение к конференции</title>
+
+    <link rel="stylesheet" href="./public/Assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="./public/Assets/css/style.css">
+</head>
+<body class="d-flex flex-column justify-content-between h-100">
+    <nav class="navbar navbar-expand-md content-padding mt-3">
+        <img src="./public/Assets/images/icon-small.png" alt="logo" class="logo mr-4">
+        <a href="#" class="navbar-brand text-dark">Dev Proger Meet</a>
+        <div class="collapse navbar-collapse">
+            <ul class="navbar-nav mr-auto">
+                <!-- <li class="nav-item">
+                    <a href="#" class="nav-link">At a glance</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">How it works</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">Plan and Price</a>
+                </li> -->
+            </ul>
+
+            <ul class="navbar-nav mr-0 display-center navbar-login">
+                <li class="nav-item sign-in">
+                    <a href="#" class="nav-link">Авторизация</a>
+                </li>
+                <li class="nav-item sign-in">
+                    <button class="btn btn-outline d-flex align-ites-center join-meeting-func">
+                        Подключиться
+                        <span class="material-icons ml-3">login</span>
+                    </button>
+                </li>
+                <li class="nav-item sign-in">
+                    <button class="btn new-meeting-func">Новая конференция</button>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="content-padding">
+        <div class="h-100 d-flex justify-content-between align-items-center content-info">
+            <div class="content-info-max">
+                <h1 style="font-size: 3rem;">Премиум видео-конференции. Теперь доступен для всех.</h1>
+                <p style="font-size: 20px;">Переработка видеоконференции для безопасных деловых встреч.</p>
+                <ul class="display-center justify-content-start">
+                    <li class="mr-3">
+                        <button class="btn display-center btn-new-meeting new-meeting-func">
+                            <span class="material-icons mr-2">video_call</span>
+                            Новая конференция
+                        </button>
+                    </li>
+                    <li>
+                        <button class="btn btn-outline display-center btn-enter-code">
+                            <span class="material-icons mr-3">keyboard</span>
+                            <input type="text" placeholder="Введите код конференции" class="input-func">
+                        </button>
+                    </li>
+                    <li class="text-dark font-weight-bold cursor-pointer pl-2 material-icons join-action-func">
+                        login
+                    </li>
+                </ul>
+            </div>
+            <div class="">
+                <img src="./public/Assets/images/google-meet-people.jpg" alt="meet-people" class="signin-image">
+            </div>
+        </div>
+    </main>
+
+    <footer class="content-padding mb-5">
+        <h6>Читать больше информации о <span class="learn-more">Dev proger Meet</span>.</h6>
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <script>
+        $(() => {
+            $(document).on("click", ".join-meeting-func", () => {
+                $(".input-func").focus()
+            })
+
+            $(document).on("click", ".join-action-func", () => {
+                let joinValue = $(".input-func").val()
+                let meetingUrl = window.location.origin + "?meetingID=" + joinValue
+                window.location.replace(meetingUrl)
+            })
+
+            $(document).on("click", ".new-meeting-func", () => {
+                let randomId = Math.floor(Math.random() * 100000000)
+                let meetingUrl = window.location.origin + "?meetingID=" + randomId
+                window.location.replace(meetingUrl)
+            })
+        })
+    </script>
+</body>
+</html>

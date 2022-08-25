@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Конференция</title>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="./public/Assets/css/style.css">
+</head>
+<body>
+    <main class="d-flex flex-column home-wrap">
+        <div class="meet-top">
+            <div class="top-remote-video-show-wrap d-flex">
+                <div id="meetingContainer" class="w-75 d-none">
+                    <div class="call-wrap">
+                        <div class="video-wrap d-flex flex-wrap-wrap" id="divUsers">
+                            <div id="me" class="userBox display-center flex-column">
+                                <h2 class="display-center user-heading"></h2>
+                                <div class="display-center">
+                                    <video autoplay muted id="localVideoPlayer"></video>
+                                </div>
+                            </div>
+                            <div id="otherTemplate" class="userbox display-center flex-column">
+                                <h2 class="display-center user-heading"></h2>
+                                <div class="display-center">
+                                    <video autoplay muted></video>
+                                    <audio class="audioUser" autoplay controls></audio>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="g-right-details-wrap bg-light text-secondary h-100 style-basis" >
+                    <div class="meeting-heading-wrap d-flex justify-content-between align-items-center pe-3 ps-3">
+                        <div class="meeting-heading cursor-pointer">Подробности встречи</div>
+                        <div class="meeting-heading-cross display-center cursor-pointer">
+                            <div class="material-icons">clear</div>
+                        </div>
+                    </div>
+                    <div class="people-chat-wrap d-flex justify-content-between align-items-center pe-3 ps-3 ms-3 me-3">
+                        <div class="people-heading display-center cursor-pointer">
+                            <div class="people-heading-icon display-center me-3">
+                                <span class="material-icons">people</span>
+                            </div>
+                            <div class="people-heading-text display-center">
+                                Участники (<span class="participant-count">1</span>)
+                            </div>
+                        </div>
+                        <div class="chat-heading active d-flex justify-content-round align-items-center cursor-pointer">
+                            <div class="chat-heading-icon display-center me-3">
+                                <span class="material-icons">message</span>
+                            </div>
+                            <div class="chat-heading-text">Чат</div>
+                        </div>
+                    </div>
+                    <div class="in-call-chat-wrap me-3 ms-3 ps-3 pe-3">
+                        <div class="in-call-wrap-up mt-4">
+                            <div class="in-call-wrap d-flex justify-content-between align-items-center mb-3">
+                                <div class="participant-img-name-wrap display-center cursor-pointer">
+                                    <div class="participant-img">
+                                        <img src="./public/Assets/images/other.jpg" class="border border-secondary user-image">
+                                    </div>
+                                    <div class="participant-name ms-4">You</div>
+                                </div>
+                                <div class="participant-action-wrap display-center cursor-pointer">
+                                    <div class="participant-action-dot display-center me-2">
+                                        <span class="material-icons cursor-pointer">more_vert</span>
+                                    </div>
+                                    <div class="participant-action-pin display-center me-2">
+                                        <span class="material-icons cursor-pointer">push_pin</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="chat-show-wrap text-secondary flex-column justify-content-between h-100">
+                            <div class="chat-message-show mt-3" id="messages">
+
+                            </div>
+                            <div class="chat-message-sent d-flex justify-content-between align-items-center mb-3">
+                                <div class="chat-message-sent-input">
+                                    <input type="text" name="message" class="chat-message-sent-input-field w-100" id="message" placeholder="Введите ваше сообщение">
+                                </div>
+                                <div class="chat-message-sent-action display-center cursor-pointer" id="btn-send-message">
+                                    <span class="material-icons">send</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="meet-top-left bg-light text-secondary ps-4 pe-2 w-25 d-flex justify-content-between align-items-center">
+                <div class="top-left-participant-wrap pt-2 cursor-pointer">
+                    <div class="top-left-participant-icon display-center">
+                        <span class="material-icons me-3">people</span>
+                        Участники
+                    </div>
+                    <div class="top-left-participant-count">1</div>
+                </div>
+                <div class="top-left-chat-wrap pt-2 cursor-pointer display-center">
+                    <span class="material-icons me-3">message</span>
+                    Сообщения
+                </div>
+                <div class="top-left-time-wrap"></div>
+            </div>
+        </div>
+        <div class="meet-bottom bg-light m-0 d-flex justify-content-between align-items-center">
+            <div class="bottom-left d-flex meet-details">
+                <div class="g-details mb-2">
+                    <div class="g-details-heading d-flex justify-content-between align-items-center mb-4">
+                        <div class="g-details-heading-detail d-flex align-items-center cursor-pointer">
+                            <span class="material-icons me-3">info</span>
+                            <span class="mt-1">Детали</span>
+                        </div>
+                        <div class="g-details-heading-attachment d-flex align-items-center  cursor-pointer">
+                            <span class="material-icons me-3">attachment</span>
+                            <span class="mt-1">Файлы</span>
+                        </div>
+                    </div>
+                    <div class="g-details-heading-show-wrap">
+                        <div class="g-details-heading-show">
+                            <div><b>Информация о конференции</b></div>
+                            <div class="meeting_url pt-1" data-placement="top" data-toggle="tooltip"></div>
+                            <div class="code_meet mt-1"><b>Код конференции:</b></div>
+                            <div class="meeting_code pt-1" data-placement="top" data-toggle="tooltip"></div>
+                            <div class="cursor-pointer mt-2 d-flex align-items-center">
+                                <span class="material-icons">content_copy</span>
+                                <span class="copy_info ms-2 me-3">Копировать ссылку</span>
+                                <span class="copy-link">Скопировано!</span>
+                            </div>
+                            <div class="cursor-pointer mt-2 d-flex align-items-center">
+                                <span class="material-icons">content_copy</span>
+                                <span class="copy_code ms-2 me-3">Копировать код</span>
+                                <span class="copy-code">Скопировано!</span>
+                            </div>
+                        </div>
+
+                        <div class="g-details-heading-show-attachment">
+                            <div class="show-attach-file"></div>
+                            <div class="upload-attach-file">
+                                <form ref="uploadForm" enctype="multipart/form-data" class="display-center flex-column" id="uploadForm">
+                                    <div class="custom-file mb-3">
+                                        <input type="file" class="form-control custom-file-input" id="customFile" name="customFile">
+                                    </div>
+                                    <div class="share-button-wrap">
+                                        <button class="btn btn-sm share-attach">Загрузить</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="display-center cursor-pointer meeting-details-button">
+                    Детали конференции 
+                    <span class="material-icons">keyboard_arrow_down</span>
+                </div>
+            </div>
+            <div class="bottom-middle d-flex justify-content-center align-items-center button-options-user">
+                <div class="mic-toggle-wrap action-icon-style display-center me-2 cursor-pointer" id="microMute">
+                    <span class="material-icons">mic_off</span>
+                </div>
+                <div class="end-call-wrap action-icon-style display-center me-2 cursor-pointer">
+                    <div class="end-call-icon">
+                        <div class="material-icons">call</div>
+                    </div>
+                </div>
+                <div class="video-toggle-wrap action-icon-style display-center me-2 cursor-pointer" id="videoMute">
+                    <span class="material-icons">videocam_off</span>
+                </div>
+            </div>
+            <div class="bottom-right d-flex justify-content-center align-items-center me-3 meet-options">
+                <div class="present-now-wrap d-flex justify-content-center flex-column align-items-center me-5 cursor-pointer" id="screenShareMute">
+                    <span class="material-icons">present_to_all</span>
+                    <div>Демонстрация экрана</div>
+                </div>
+                <div class="option-wrap cursor-pointer display-center meet-options-screen">
+                    <div class="recording-show">
+                        <div class="save-meet btn btn-sm mb-3">Запись конференции</div>
+                        <span class="moment-messages-heading d-block ">Быстрые сообщения</span>
+                        <div class="moment-messages mt-2">
+                            <span class="moment_message d-inline-block pe-2">👋</span>
+                            <span class="moment_message d-inline-block pe-2">🔥</span>
+                            <span class="moment_message d-inline-block pe-2">🙌</span>
+                            <span class="moment_message d-inline-block pe-2">😅</span>
+                            <span class="moment_message d-inline-block">✋</span>
+                        </div>
+                    </div>
+
+                    <div class="option-icon">
+                        <span class="material-icons">more_horiz</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- modals -->
+
+      <!-- -------------------- -->
+
+      <button type="button" hidden class="btn modalErrorConnectBrn modalLeaveBtn" data-bs-toggle="modal" data-bs-target="#staticEndMeet">
+        Launch static backdrop modal
+    </button>
+
+    <div class="modal fade modalErrorConnect" id="staticEndMeet" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-body">
+                <div class="mb-3">
+                    <label class="form-label">Вы действительно хотите покинуть конференцию?</label>
+                </div>
+                <div class="d-flex justify-content-start align-items-center">
+
+                    <a href="./exit.html" class="btn btn-small btn-sm me-3">Выйти</a>
+                    <button class="btn btn-next-meet btn-small btn-outline btn-sm">Остаться</button>
+                </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    <button type="button" hidden class="btn modalErrorConnectBrn" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+        Launch static backdrop modal
+    </button>
+
+    <div class="modal fade modalErrorConnect" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-body">
+                <span class="text-danger fs-1 material-icons">
+                    warning
+                </span>
+                <p>Не заполнен идентификатор конференции или пользователя. Дальнейшие действия невозможны!</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- -------------------- -->
+
+    <button type="button" hidden class="btn modalErrorConnectBrn modalAuthBtn" data-bs-toggle="modal" data-bs-target="#staticBackdropAuthModal">
+        Launch static backdrop modal
+    </button>
+
+    <div class="modal fade modalErrorConnect" id="staticBackdropAuthModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-body">
+                <div class="mb-3">
+                    <label class="form-label">Ваши данные</label>
+                    <input type="text" class="form-control" id="input-form" placeholder="Введите данные здесь">
+                </div>
+                <div class="btn btn-small btn-sm buttonAuthSendDataForm">Авторизоваться</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- end modals -->
+
+      <!-- toasts -->
+
+      <!-- -------------------- -->
+
+    <button type="button" hidden class="btn btn-primary" id="warningAudioOff"></button>
+
+    <div class="toast-container position-fixed bottom-0 end-0 p-3">
+        <div id="warningAudioOffToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header">
+                <span class="material-icons rounded me-2">mic</span>
+                Микрофон недоступен!
+            </div>
+            <div class="toast-body">
+            Включите разрешение на использование микрофона!
+            </div>
+        </div>
+    </div>
+
+      <!-- -------------------- -->
+
+    <button type="button" hidden class="btn btn-primary" id="warningVideoOff"></button>
+
+    <div class="toast-container position-fixed bottom-0 end-0 p-3">
+        <div id="warningVideoOffToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header">
+                <span class="material-icons rounded me-2">videocam</span>
+                Камера недоступна!
+            </div>
+            <div class="toast-body">
+            Включите разрешение на использование камеры!
+            </div>
+        </div>
+    </div>
+
+    <!-- -------------------- -->
+
+  <button type="button" hidden class="btn btn-primary" id="warnUserExit"></button>
+
+  <div class="toast-container position-fixed bottom-0 end-0 p-3">
+      <div id="warnUserExitToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+          <div class="toast-header">
+              <span class="material-icons rounded me-2">logout</span>
+              <span id="message-user-exit"></span>
+          </div>
+      </div>
+  </div>
+
+    <!-- ent toasts -->
+
+    <script>
+        const toastTriggerAudio = document.getElementById('warningAudioOff')
+        const toastLiveExampleAudio = document.getElementById('warningAudioOffToast')
+        if (toastTriggerAudio) {
+            toastTriggerAudio.addEventListener('click', () => {
+                const toast = new bootstrap.Toast(toastLiveExampleAudio)
+
+                toast.show()
+            })
+        }
+
+        const toastTriggerVideo = document.getElementById('warningVideoOff')
+        const toastLiveExampleVideo = document.getElementById('warningVideoOffToast')
+        if (toastTriggerVideo) {
+            toastTriggerVideo.addEventListener('click', () => {
+                const toast = new bootstrap.Toast(toastLiveExampleVideo)
+
+                toast.show()
+            })
+        }
+
+        const toastTriggerExitUserBtn = document.getElementById('warnUserExit')
+        const toastTriggerExitUser = document.getElementById('warnUserExitToast')
+        if (toastTriggerExitUserBtn) {
+            toastTriggerExitUserBtn.addEventListener('click', () => {
+                const toast = new bootstrap.Toast(toastTriggerExitUser)
+
+                toast.show()
+            })
+        }
+    </script>
+
+      <!-- end toasts -->
+
+      <script src="./public/Assets/js/uuid.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="./public/Assets/js/app.js"></script>
+
+    <script>
+        $(() => {
+            const urlParams = new URLSearchParams(window.location.search)
+
+            let meetingId = urlParams.get("meetingID")
+
+            if(!meetingId){
+                window.location.href = "/action.html"
+            }
+
+            $(".modalAuthBtn").trigger("click")
+            $("#input-form").on("focus")
+
+            $(".buttonAuthSendDataForm").on("click", () => {
+                $(".modalAuthBtn").trigger("click")
+
+                let userId = String($("#input-form").val()).trim()
+                $("#input-form").val("")
+
+                if(!userId || !meetingId){
+                    
+                    $(".modalErrorConnectBrn").trigger("click")
+
+                    setTimeout(() => {
+                        window.location.href = "/action.html"
+                    }, 3000)
+
+                    return
+                }
+                $("#meetingContainer").show()
+
+                app._init(userId, meetingId)
+            })
+
+
+            $(document).on("click", ".people-heading", () => {
+                $(".people-heading").addClass("active")
+                $(".chat-heading").removeClass("active")
+                $(".chat-show-wrap").hide(300)
+                $(".in-call-wrap-up").show(300)
+            })
+
+            $(document).on("click", ".chat-heading", () => {
+                $(".chat-heading").addClass("active")
+                $(".people-heading").removeClass("active")
+                $(".in-call-wrap-up").hide(300)
+                $(".chat-show-wrap").show(300)
+            })
+
+            $(document).on("click", ".meeting-heading-cross", () => {
+                $(".g-right-details-wrap").hide(300)
+            })
+
+            $(document).on("click", ".top-left-participant-wrap", () => {
+                $(".g-right-details-wrap").show(300)
+                $(".people-heading").addClass("active")
+                $(".chat-heading").removeClass("active")
+                $(".chat-show-wrap").hide(300)
+                $(".in-call-wrap-up").show(300)
+            })
+
+            $(document).on("click", ".top-left-chat-wrap", () => {
+                $(".g-right-details-wrap").show(300)
+                $(".chat-heading").addClass("active")
+                $(".people-heading").removeClass("active")
+                $(".in-call-wrap-up").hide(300)
+                $(".chat-show-wrap").show(300)
+            })
+
+            $(document).on("click", ".end-call-wrap", () => {
+                $(".modalLeaveBtn").trigger("click")
+            })
+
+            $(document).on("click", ".btn-next-meet", () => {
+                $(".modalLeaveBtn").trigger("click")
+            })
+        })
+    </script>
+</body>
+</html>
